@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Tangiii 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: white;
+      overflow: hidden;
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1.2s ease;
+    }
+    .page.active {
+      display: flex;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      animation: zoomIn 1.2s ease;
+    }
+    img {
+      max-width: 320px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 1.5s ease;
+    }
+    button {
+      background: white;
+      color: #ff6f91;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      animation: fadeIn 2s ease;
+    }
+    button:hover {
+      background: #ff6f91;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Fireworks canvas */
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Music -->
+  <audio id="bg-music" src="song.mp3" loop></audio>
+
+  <!-- Fireworks Canvas -->
+  <canvas id="fireworks"></canvas>
+
+  <div class="container">
+    <!-- Cover Page (Intro) -->
+    <section class="page active" id="cover">
+      <h1>🎁 Click to Start the Surprise, Tangiii 💖♾️</h1>
+      <button onclick="startSurprise()">Start 💖</button>
+    </section>
+
+    <!-- Page 1 -->
+    <section class="page" id="page1">
+      <h1>🎂 Happy Birthday, Talkative Tangiii 💖♾️</h1>
+      <img src="photo1.jpg" alt="photo1">
+      <button onclick="nextPage(2)">Next ➡️</button>
+    </section>
+
+    <!-- Page 2 -->
+    <section class="page" id="page2">
+      <h1>You are my best friend and sister forever 💕</h1>
+      <img src="photo2.jpg" alt="photo2">
+      <button onclick="nextPage(3)">Next ➡️</button>
+    </section>
+
+    <!-- Page 3 -->
+    <section class="page" id="page3">
+      <h1>Two souls, one heart 🌍 — That’s us, Tangiii 💖</h1>
+      <img src="photo3.jpg" alt="photo3">
+      <button onclick="nextPage(4)">Next ➡️</button>
+    </section>
+
+    <!-- Page 4 -->
+    <section class="page" id="page4">
+      <h1>Thank you for always being there 💖</h1>
+      <img src="photo4.jpg" alt="photo4">
+      <button onclick="nextPage(5)">Next ➡️</button>
+    </section>
+
+    <!-- Page 5 -->
+    <section class="page" id="page5">
+      <h1>Every moment with you is special ✨</h1>
+      <img src="photo5.jpg" alt="photo5">
+      <button onclick="nextPage(6)">Next ➡️</button>
+    </section>
+
+    <!-- Page 6 -->
+    <section class="page" id="page6">
+      <h1>You bring happiness to everyone 🌸</h1>
+      <img src="photo6.jpg" alt="photo6">
+      <button onclick="nextPage(7)">Next ➡️</button>
+    </section>
+
+    <!-- Page 7 -->
+    <section class="page" id="page7">
+      <h1>Keep smiling, Tangiii 😍 You light up the world!</h1>
+      <img src="photo7.jpg" alt="photo7">
+      <button onclick="nextPage(8)">Next ➡️</button>
+    </section>
+
+    <!-- Page 8 -->
+    <section class="page" id="page8">
+      <h1>I’m lucky to have you as my sister 🌟</h1>
+      <img src="photo8.jpg" alt="photo8">
+      <button onclick="nextPage(9)">Next ➡️</button>
+    </section>
+
+    <!-- Page 9 -->
+    <section class="page" id="page9">
+      <h1>May all your dreams come true, Tangiii 🎁</h1>
+      <img src="photo9.jpg" alt="photo9">
+      <button onclick="nextPage(10)">Next ➡️</button>
+    </section>
+
+    <!-- Page 10 (Final) -->
+    <section class="page" id="page10">
+      <h1>💖 Wishing you endless joy, love & success, Talkative Tangiii 💖♾️ 🎇🎉</h1>
+      <img src="photo10.jpg" alt="photo10">
+      <button onclick="nextPage(1)">🎁 Restart</button>
+    </section>
+  </div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    function startSurprise() {
+      document.getElementById("cover").classList.remove("active");
+      document.getElementById("page1").classList.add("active");
+      document.getElementById("bg-music").play();
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function nextPage(pageNumber) {
+      let pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + pageNumber).classList.add('active');
+
+      // 🎊 Confetti on every Next
+      confetti({
+        particleCount: 120,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+
+      // 🎇 Fireworks only on Page 10
+      if (pageNumber === 10) {
+        startFireworks();
+      } else {
+        stopFireworks();
+      }
+    }
+
+    // 🎇 Fireworks Animation
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let fireworksActive = false;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createFirework() {
+      const x = random(100, canvas.width - 100);
+      const y = random(50, canvas.height / 2);
+      const count = random(30, 60);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          angle: (Math.PI * 2 * i) / count,
+          speed: random(2, 6),
+          radius: 2,
+          alpha: 1,
+          decay: random(0.01, 0.02),
+          color: `hsl(${random(0, 360)}, 100%, 50%)`
+        });
+      }
+    }
+
+    function updateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.alpha -= p.decay;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+      particles = particles.filter(p => p.alpha > 0);
+    }
+
+    function loop() {
+      if (fireworksActive) {
+        if (Math.random() < 0.05) createFirework();
+        updateParticles();
+        requestAnimationFrame(loop);
+      }
+    }
+
+    function startFireworks() {
+      fireworksActive = true;
+      loop();
+    }
+
+    function stopFireworks() {
+      fireworksActive = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = [];
+    }
+  </script>
+</body>
+</html>
